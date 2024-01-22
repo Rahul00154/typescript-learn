@@ -96,6 +96,8 @@ console.log(abhii.height)
 
 console.log(abhii.id)
 
+//----------------------------------------------------------------------------------------------------------------------------//
+
 /***
  * Interface is a structure that defines the contract in your application. It defines the syntax for classes to follow. Classes that are derived from an interface must follow the structure provided by their interface.
  */
@@ -229,6 +231,8 @@ const myCarr = {
 myCarr.start()
 myCarr.stop()
 
+//------------------------------------------------------------------------------------------------------------------------------//
+
 //Type Asssertion := it is useful in the scenario of accessing the dom element because Typescript not maintain the tract of html .so hum type dete hn like we see here in example
 
 //yha button html element hai nh toh null so we provide not null to it so that it always points to htmlElement
@@ -290,6 +294,8 @@ const getData = (key: keyof Peron1): string => {
 }
 
 getData('name')
+
+//--------------------------------------------------------------------------------------------------------------------------//
 
 /**
  * UTILITY TYPES
@@ -406,3 +412,140 @@ type Random = Omit<OrderInfo, 'city'> //it remove the property name city in exis
 // }
 
 // type Param = Parameters<typeof myFunc>
+
+//----------------------------------------------------------------------------------------------------------//
+
+/**
+ Generics
+   => TypeScript generics allow you to write reusable and generalized forms of functions, classes, and interfaces.
+      It allows us to define function,classes and interfaces that can works with any data type without havig to duplicate the code
+ */
+//this works fine but we fir typescript use krne ka matlab ee nh bnta Kyunki hmlg fir properties wegrah jitte hote hain unko access hi nahi kar skte hain
+
+//So here comes generics
+const func1 = (x: any): any => {
+  return x
+}
+
+//we write this fuction using generics
+
+//<T> is type parameter i isko koi bhi naam de skte hain
+
+//jo bhi hmlog arguement me bhejenge th uss data ke type ke according <T> change ho jayega
+const func2 = <T>(x: T): T => {
+  return x
+}
+
+//this is bad practise koi bhi code read karega th pata nahi chalega use kaunsi type bhej rhe hn so we can call the function by funcName<type>(arguements)
+const ans = func2(20)
+const ans2 = func2<string>('Hello')
+const ans3 = func2<boolean>(true)
+
+console.log(typeof ans, typeof ans2)
+
+type Person2 = {
+  name: string
+  age: number
+}
+
+const func = <T>(n: T): T => {
+  return n
+}
+
+const person2: Person2 = {
+  name: 'Rahul',
+  age: 20,
+}
+
+const ans4 = func<Person2>(person2)
+console.log(ans4)
+
+// we can use multiple generics like below 👇
+
+const func3 = <T, U>(n: T, o: U) => {
+  return {
+    n,
+    o,
+  }
+}
+
+const ans5 = func3<number, string>(12, 'lol')
+
+console.log(ans5.n)
+
+//  we can give type to second type param like thie 👇
+
+const func4 = <T, U extends T>(n: T, o: U) => {
+  //u extends t means u ke pass bhi whi type hai jo t ke pass
+  //if we pass string to T then we also need to pass string to U
+  return {
+    n,
+    o,
+  }
+}
+
+const ans6 = func4<number, number>(12, 14)
+
+type Person3 = {
+  name: string
+  age: number
+}
+
+type Person4 = {
+  name: string
+  age: number
+  email: string
+}
+
+const user1: Person3 = {
+  name: 'Rahul',
+  age: 20,
+}
+
+const user2: Person4 = {
+  name: 'rahul',
+  age: 12,
+  email: 'rahul@mail.com',
+}
+
+function userDetails<T, U extends T>(obj1: T, obj2: U) {
+  //if we use extends then we have the property of T and also some extra properties
+  return { obj1, obj2 }
+}
+
+const ans7 = userDetails<Person3, Person4>(user1, user2)
+console.log(ans7)
+
+//Advanced example of generics
+
+const users1: Person3[] = [
+  {
+    name: 'abhi',
+    age: 109,
+  },
+  {
+    name: 'Nahar',
+    age: 109,
+  },
+  {
+    name: 'Levi',
+    age: 52,
+  },
+
+  {
+    name: 'Random',
+    age: 2,
+  },
+]
+
+const filterByPeoples = <T, key extends keyof T>(
+  arr: T[],
+  property: key,
+  value: T[key],
+): T[] => {
+  return arr.filter((item) => item[property] === value)
+}
+
+const filteredPeopleByName = filterByPeoples(users1, 'name', 'Nahar')
+const filteredPeopleByAge = filterByPeoples(users1, 'age', 109)
+console.log(filteredPeopleByAge)

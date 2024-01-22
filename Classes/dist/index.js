@@ -127,6 +127,7 @@ const myCarr = {
 };
 myCarr.start();
 myCarr.stop();
+//------------------------------------------------------------------------------------------------------------------------------//
 //Type Asssertion := it is useful in the scenario of accessing the dom element because Typescript not maintain the tract of html .so hum type dete hn like we see here in example
 //yha button html element hai nh toh null so we provide not null to it so that it always points to htmlElement
 // const button = document.getElementById('btn')! //this is the way to tell it is not null
@@ -166,41 +167,125 @@ const getData = (key) => {
     return myObj[key];
 };
 getData('name');
+const users = {
+    love: {
+        name: 'love',
+        age: 12,
+    },
+    Andrew: {
+        name: 'love',
+        age: 12,
+    },
+    Levi: {
+        name: 'love',
+        age: 12,
+    },
+    abhi: {
+        name: 'love',
+        age: 12,
+    },
+};
+//Exclude<Type,excludedunion> => it create new type by removing union type
+// type MyUnion = string | number | boolean
+// type ExcludeUnion = Exclude<MyUnion, number>
+//Extract<Type,Union> => it create new type by pick a type or multiple type from union
+// type MyUnion = string | number | boolean
+// type ExtractUnion = Extract<MyUnion, number>
+//NonNullable<Type> => it removes null or undefine
+// type MyUnion = string | number | boolean|null|undefined
+// type NonNullableUnion = NonNullable<MyUnion>
+//Parameters<type> // ye function ke parameter ke type janne ke liye use karte hain
+// const myFunc = (a: number, b: number) => {
+//   console.log(a + b)
+// }
+// type Param = Parameters<typeof myFunc>
+//----------------------------------------------------------------------------------------------------------//
 /**
- * UTILITY TYPES
- * partialtype<type>
- * Required<type>
- * Readonly<type>
- * Record<keys,type>
- * pick<type,keys>
- * omit<type,keys>
- * exclude<type,excludeunion>
- * extract<type,union>
+ Generics
+   => TypeScript generics allow you to write reusable and generalized forms of functions, classes, and interfaces.
+      It allows us to define function,classes and interfaces that can works with any data type without havig to duplicate the code
  */
-//Partialtype => ye kisi bhi type ki property ko optional bna deta hai
-// type User1 = {
-//   name: string
-//   email?: string
-// }
-// type User2 = Partial<User1>
-// const user: Partial<User1> = {
-//   name: 'rahul',
-// }
-//Required => Opposite of partial
-// type User2 = Required<User1>
-// const user: Required<User1> = {
-//   name: 'Rahul',
-//   email: 'rahul@mail',
-// }
-//ReadOnly: Makes every Property readonly
-// const user: Readonly<User1> = {
-//   name: 'abhi',
-//   email: 'abhi@gmai.com',
-// }
-// user.email = 'abhef' not assign value to readonly property
-//Record<keys,type> => YE mainly wha use hote hain jaha hme 2-3 type mix karkar use karne hote hain
-// type User1 = {
-//   name: string
-//   email: string
-// }
-// type User2 = Record<'name' | 'email' | 'gender', string>
+//this works fine but we fir typescript use krne ka matlab ee nh bnta Kyunki hmlg fir properties wegrah jitte hote hain unko access hi nahi kar skte hain
+//So here comes generics
+const func1 = (x) => {
+    return x;
+};
+//we write this fuction using generics
+//<T> is type parameter i isko koi bhi naam de skte hain
+//jo bhi hmlog arguement me bhejenge th uss data ke type ke according <T> change ho jayega
+const func2 = (x) => {
+    return x;
+};
+//this is bad practise koi bhi code read karega th pata nahi chalega use kaunsi type bhej rhe hn so we can call the function by funcName<type>(arguements)
+const ans = func2(20);
+const ans2 = func2('Hello');
+const ans3 = func2(true);
+console.log(typeof ans, typeof ans2);
+const func = (n) => {
+    return n;
+};
+const person2 = {
+    name: 'Rahul',
+    age: 20,
+};
+const ans4 = func(person2);
+console.log(ans4);
+// we can use multiple generics like below 👇
+const func3 = (n, o) => {
+    return {
+        n,
+        o,
+    };
+};
+const ans5 = func3(12, 'lol');
+console.log(ans5.n);
+//  we can give type to second type param like thie 👇
+const func4 = (n, o) => {
+    //u extends t means u ke pass bhi whi type hai jo t ke pass
+    //if we pass string to T then we also need to pass string to U
+    return {
+        n,
+        o,
+    };
+};
+const ans6 = func4(12, 14);
+const user1 = {
+    name: 'Rahul',
+    age: 20,
+};
+const user2 = {
+    name: 'rahul',
+    age: 12,
+    email: 'rahul@mail.com',
+};
+function userDetails(obj1, obj2) {
+    //if we use extends then we have the property of T and also some extra properties
+    return { obj1, obj2 };
+}
+const ans7 = userDetails(user1, user2);
+console.log(ans7);
+//Advanced example of generics
+const users1 = [
+    {
+        name: 'abhi',
+        age: 109,
+    },
+    {
+        name: 'Nahar',
+        age: 109,
+    },
+    {
+        name: 'Levi',
+        age: 52,
+    },
+    {
+        name: 'Random',
+        age: 2,
+    },
+];
+const filterByPeoples = (arr, property, value) => {
+    return arr.filter((item) => item[property] === value);
+};
+const filteredPeopleByName = filterByPeoples(users1, 'name', 'Nahar');
+const filteredPeopleByAge = filterByPeoples(users1, 'age', 109);
+console.log(filteredPeopleByAge);
