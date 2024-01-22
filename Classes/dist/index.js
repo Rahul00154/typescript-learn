@@ -166,3 +166,41 @@ const getData = (key) => {
     return myObj[key];
 };
 getData('name');
+/**
+ * UTILITY TYPES
+ * partialtype<type>
+ * Required<type>
+ * Readonly<type>
+ * Record<keys,type>
+ * pick<type,keys>
+ * omit<type,keys>
+ * exclude<type,excludeunion>
+ * extract<type,union>
+ */
+//Partialtype => ye kisi bhi type ki property ko optional bna deta hai
+// type User1 = {
+//   name: string
+//   email?: string
+// }
+// type User2 = Partial<User1>
+// const user: Partial<User1> = {
+//   name: 'rahul',
+// }
+//Required => Opposite of partial
+// type User2 = Required<User1>
+// const user: Required<User1> = {
+//   name: 'Rahul',
+//   email: 'rahul@mail',
+// }
+//ReadOnly: Makes every Property readonly
+// const user: Readonly<User1> = {
+//   name: 'abhi',
+//   email: 'abhi@gmai.com',
+// }
+// user.email = 'abhef' not assign value to readonly property
+//Record<keys,type> => YE mainly wha use hote hain jaha hme 2-3 type mix karkar use karne hote hain
+// type User1 = {
+//   name: string
+//   email: string
+// }
+// type User2 = Record<'name' | 'email' | 'gender', string>

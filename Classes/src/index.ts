@@ -290,3 +290,119 @@ const getData = (key: keyof Peron1): string => {
 }
 
 getData('name')
+
+/**
+ * UTILITY TYPES
+ * partialtype<type>
+ * Required<type>
+ * Readonly<type>
+ * Record<keys,type>
+ * pick<type,keys>
+ * omit<type,keys>
+ * exclude<type,excludeunion>
+ * extract<type,union>
+ */
+
+//Partialtype => ye kisi bhi type ki property ko optional bna deta hai
+
+// type User1 = {
+//   name: string
+//   email?: string
+// }
+
+// type User2 = Partial<User1>
+
+// const user: Partial<User1> = {
+//   name: 'rahul',
+// }
+
+//Required => Opposite of partial
+
+// type User2 = Required<User1>
+
+// const user: Required<User1> = {
+//   name: 'Rahul',
+//   email: 'rahul@mail',
+// }
+
+//ReadOnly: Makes every Property readonly
+
+// const user: Readonly<User1> = {
+//   name: 'abhi',
+//   email: 'abhi@gmai.com',
+// }
+
+// user.email = 'abhef' not assign value to readonly property
+
+//Record<keys,type> => YE mainly wha use hote hain jaha hme 2-3 type mix karkar use karne hote hain
+
+// type User1 = {
+//   name: string
+//   email: string
+// }
+
+// type User2 = Record<'name' | 'email' | 'gender', string>
+
+interface UserInfo {
+  name: string
+  age: number
+}
+
+type UserName = 'love' | 'Andrew' | 'Levi' | 'abhi'
+
+const users: Record<UserName, UserInfo> = {
+  love: {
+    name: 'love',
+    age: 12,
+  },
+  Andrew: {
+    name: 'love',
+    age: 12,
+  },
+  Levi: {
+    name: 'love',
+    age: 12,
+  },
+  abhi: {
+    name: 'love',
+    age: 12,
+  },
+}
+
+//Pick => it allows us to create new type that contains subsets of existing type
+
+type OrderInfo = {
+  id: string
+  city: string
+  state: string
+  name: string
+}
+
+// type ShoppingInfo = Pick<orderInfo, 'city' | 'name'>
+
+//OMIT => It create new type from an existing type by removing some properties
+
+type Random = Omit<OrderInfo, 'city'> //it remove the property name city in existing type
+
+//Exclude<Type,excludedunion> => it create new type by removing union type
+
+// type MyUnion = string | number | boolean
+// type ExcludeUnion = Exclude<MyUnion, number>
+
+//Extract<Type,Union> => it create new type by pick a type or multiple type from union
+
+// type MyUnion = string | number | boolean
+// type ExtractUnion = Extract<MyUnion, number>
+
+//NonNullable<Type> => it removes null or undefine
+
+// type MyUnion = string | number | boolean|null|undefined
+// type NonNullableUnion = NonNullable<MyUnion>
+
+//Parameters<type> // ye function ke parameter ke type janne ke liye use karte hain
+
+// const myFunc = (a: number, b: number) => {
+//   console.log(a + b)
+// }
+
+// type Param = Parameters<typeof myFunc>
