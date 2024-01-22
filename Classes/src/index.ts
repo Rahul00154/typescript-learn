@@ -228,3 +228,65 @@ const myCarr = {
 
 myCarr.start()
 myCarr.stop()
+
+//Type Asssertion := it is useful in the scenario of accessing the dom element because Typescript not maintain the tract of html .so hum type dete hn like we see here in example
+
+//yha button html element hai nh toh null so we provide not null to it so that it always points to htmlElement
+
+// const button = document.getElementById('btn')! //this is the way to tell it is not null
+
+// const button = <HTMLElement>document.getElementById('btn')
+// const button = document.getElementById('btn') as HTMLElement
+// button?.onclick
+
+// const img = document.getElementById("myimg")as HTMLElement //this way we cannot access the property of image tag so typescript gives another way to access it
+
+// const img = document.getElementById('myimg') as HTMLImageElement //This way we can access the property
+
+// const img = <HTMLImageElement>document.querySelector("img") //this is another way to select html element
+
+const form = document.getElementById('myForm') as HTMLFormElement
+
+const myInput = document.querySelector('#myForm > input') as HTMLInputElement
+
+form.onsubmit = (e: Event) => {
+  e.preventDefault()
+  const value = Number(myInput.value)
+  const h2 = document.createElement('h2')
+  const body = document.querySelector('body')!
+  h2.textContent = String(value + 20)
+
+  console.log(value)
+  console.log(typeof value)
+  body.append(h2)
+}
+
+interface Peron1 {
+  // [key: string]: string
+  name: string
+  email: string
+}
+
+const myObj: Peron1 = {
+  name: 'Rahul',
+  email: 'rahul@mail.com',
+}
+
+// const key = 'name' when we use this with let so we can change it to any key so here we use keyof in type assertion
+let key = 'name'
+
+console.log(myObj[key as keyof Peron1])
+// myObj[key]
+
+const getName = (): string => {
+  return myObj['name']
+}
+const getEmail = (): string => {
+  return myObj['email']
+}
+
+const getData = (key: keyof Peron1): string => {
+  return myObj[key]
+}
+
+getData('name')
