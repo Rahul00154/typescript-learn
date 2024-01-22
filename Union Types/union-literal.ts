@@ -48,15 +48,3 @@ console.log(click)
 
 let auth: 'secretPassword' = 'secretPassword'
 console.log(auth)
-
-/***
- * Tuples
- *It works like an array
- * Number of element is fixed
- * it has predefined type for each index
- */
-
-let array: [number, string, boolean]
-
-array = [5, 'Hello', true]
-console.log(array)
