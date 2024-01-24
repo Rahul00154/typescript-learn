@@ -44,6 +44,7 @@ h2 {
   border-radius: 0 5px 5px 0;
   border: none;
   background-color: #9e93d6;
+  cursor: pointer;
 }
 
 .todo-container {
@@ -55,4 +56,30 @@ h2 {
 .todo {
   width: 50%;
   margin: 0 auto;
+  display: flex;
+  gap: 5px;
+}
+
+.todo > p {
+  width: 80%;
+  background: rgb(228, 224, 224);
+  padding: 0.25rem;
+}
+
+.deleteBtn {
+  width: 15%;
+  padding: 0.5rem;
+  border-radius: 0 5px 5px 0;
+  border: none;
+  background-color: #9e93d6;
+  cursor: pointer;
+}
+
+.isCompleted {
+  padding: 0.25rem;
+  width: 5%;
+}
+
+.textCut {
+  text-decoration: line-through;
 }
